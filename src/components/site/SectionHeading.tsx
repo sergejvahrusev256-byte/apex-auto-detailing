@@ -3,12 +3,14 @@ import { Reveal } from "./Reveal";
 import { cn } from "@/lib/utils";
 
 export function SectionHeading({
+  index,
   eyebrow,
   title,
   text,
   className,
   aside,
 }: {
+  index?: string;
   eyebrow: string;
   title: ReactNode;
   text?: string;
@@ -16,18 +18,28 @@ export function SectionHeading({
   aside?: ReactNode;
 }) {
   return (
-    <div className={cn("flex flex-col gap-8 md:flex-row md:items-end md:justify-between", className)}>
-      <Reveal className="max-w-3xl">
+    <div className={cn("grid gap-10 md:grid-cols-12 md:items-end", className)}>
+      <Reveal className="md:col-span-8">
         <p className="eyebrow flex items-center gap-4">
+          {index && <span className="font-display text-[0.65rem] tracking-[0.2em] text-foreground/40">({index})</span>}
           <span className="h-px w-10 bg-primary" />
           {eyebrow}
         </p>
-        <h2 className="mt-6 font-display text-3xl font-semibold uppercase leading-[1.1] text-foreground md:text-5xl">
+        <h2 className="mt-7 font-display text-[1.9rem] font-medium uppercase leading-[1.08] tracking-[-0.02em] text-foreground sm:text-4xl md:text-[3.4rem]">
           {title}
         </h2>
-        {text && <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">{text}</p>}
       </Reveal>
-      {aside && <Reveal delay={150}>{aside}</Reveal>}
+      {(text || aside) && (
+        <Reveal delay={150} className="flex flex-col items-start gap-8 md:col-span-4 md:pb-2">
+          {text && <p className="text-[0.95rem] leading-[1.8] text-muted-foreground">{text}</p>}
+          {aside}
+        </Reveal>
+      )}
     </div>
   );
+}
+
+/** Secondary tone for the second half of a heading — keeps orange for true accents only. */
+export function Soft({ children }: { children: ReactNode }) {
+  return <span className="font-light text-foreground/45">{children}</span>;
 }
