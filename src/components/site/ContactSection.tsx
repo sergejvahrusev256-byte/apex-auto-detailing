@@ -208,7 +208,7 @@ export function ContactSection() {
   );
 }
 
-function Field({ children, error }: { children: React.ReactNode; error?: string }) {
+function Field({ children, error }: { children: React.ReactNode; error?: string | undefined }) {
   return (
     <div>
       <div className="relative">{children}</div>

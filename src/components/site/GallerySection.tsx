@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 export function GallerySection({ showHeading = true }: { showHeading?: boolean }) {
   const [active, setActive] = useState<number | null>(null);
+  const current = active === null ? undefined : GALLERY[active];
 
   const close = useCallback(() => setActive(null), []);
   const next = useCallback(() => setActive((i) => (i === null ? i : (i + 1) % GALLERY.length)), []);
@@ -78,7 +79,7 @@ export function GallerySection({ showHeading = true }: { showHeading?: boolean }
         </div>
       </div>
 
-      {active !== null && (
+      {active !== null && current && (
         <div
           className="animate-in fade-in fixed inset-0 z-[60] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-sm"
           role="dialog"
@@ -87,13 +88,13 @@ export function GallerySection({ showHeading = true }: { showHeading?: boolean }
           onClick={close}
         >
           <img
-            src={GALLERY[active].src}
-            alt={GALLERY[active].alt}
+            src={current.src}
+            alt={current.alt}
             className="animate-in zoom-in-95 max-h-[85vh] max-w-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           <p className="absolute bottom-6 left-1/2 w-full max-w-xl -translate-x-1/2 px-4 text-center text-sm text-foreground/70">
-            {GALLERY[active].alt} · {active + 1} / {GALLERY.length}
+            {current.alt} · {active + 1} / {GALLERY.length}
           </p>
           <button
             type="button"
