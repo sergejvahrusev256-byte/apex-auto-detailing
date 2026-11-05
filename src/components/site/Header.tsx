@@ -30,6 +30,7 @@ export function Header() {
   }, [open]);
 
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
@@ -88,11 +89,12 @@ export function Header() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — outside header so backdrop-filter doesn't trap fixed positioning */}
       <div
         className={cn(
-          "fixed inset-x-0 bottom-0 top-16 bg-background transition-all duration-500 lg:hidden",
+          "fixed inset-x-0 bottom-0 z-40 overflow-y-auto bg-background transition-all duration-500 lg:hidden",
           scrolled ? "top-16" : "top-20 md:top-24",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
@@ -129,6 +131,6 @@ export function Header() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   );
 }

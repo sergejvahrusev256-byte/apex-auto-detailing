@@ -56,7 +56,7 @@ function Index() {
             Студия детейлинга · Москва
           </p>
           <h1
-            className="animate-rise mt-8 max-w-4xl font-display text-[2.6rem] font-bold uppercase leading-[1.02] text-foreground sm:text-6xl md:text-7xl xl:text-8xl"
+            className="animate-rise mt-8 max-w-4xl font-display text-[8.4vw] font-bold uppercase leading-[1.02] text-foreground sm:text-6xl md:text-7xl xl:text-8xl"
             style={{ animationDelay: "150ms" }}
           >
             Совершенство <br />в каждой <span className="text-primary">детали.</span>

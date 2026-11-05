@@ -9,6 +9,7 @@ export const contactSchema = z.object({
   phone: z
     .string()
     .trim()
+    .min(1, { message: "Укажите номер телефона" })
     .max(25, { message: "Слишком длинный номер" })
     .refine((v) => /^[+\d\s()-]+$/.test(v), { message: "Номер может содержать только цифры, +, -, ( )" })
     .refine((v) => {
