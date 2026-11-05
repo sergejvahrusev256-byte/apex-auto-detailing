@@ -3,6 +3,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant can-hover (@media (hover: hover) and (pointer: fine));
 
 /*
  * APEX DETAILING design system — dark luxury, graphite + bright orange.
@@ -59,6 +60,7 @@
 
   --shadow-glow: var(--glow);
   --shadow-glow-lg: var(--glow-lg);
+  --shadow-glow-soft: var(--glow-soft);
 }
 
 :root {
@@ -88,6 +90,20 @@
 
   --glow: 0 10px 40px -10px oklch(0.7 0.2 45 / 55%);
   --glow-lg: 0 18px 60px -12px oklch(0.7 0.2 45 / 70%);
+  --glow-soft: 0 40px 90px -50px oklch(0.7 0.2 45 / 45%);
+  --gradient-hero-mobile: linear-gradient(
+    180deg,
+    oklch(0.11 0.003 260 / 55%) 0%,
+    oklch(0.11 0.003 260 / 0%) 22%,
+    oklch(0.11 0.003 260 / 25%) 42%,
+    oklch(0.11 0.003 260 / 92%) 68%,
+    var(--background) 100%
+  );
+  --gradient-vignette: radial-gradient(
+    ellipse at 60% 45%,
+    transparent 40%,
+    oklch(0.09 0.003 260 / 70%) 100%
+  );
   --gradient-hero: linear-gradient(
     90deg,
     oklch(0.11 0.003 260 / 95%) 0%,
@@ -249,10 +265,106 @@
   animation: scroll-dot 1.8s ease-in-out infinite;
 }
 
+/* ===== Premium layer ===== */
+
+@utility bg-hero-mobile {
+  background-image: var(--gradient-hero-mobile);
+}
+@utility bg-vignette {
+  background-image: var(--gradient-vignette);
+}
+
+/* Soft orange light — use sparingly */
+@utility glow-orb {
+  pointer-events: none;
+  background: radial-gradient(closest-side, oklch(0.7 0.2 45 / 22%), transparent);
+  filter: blur(24px);
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(1 0 0 / 18%);
+}
+
+/* Button fill that rises on hover */
+@utility btn-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--sweep, var(--foreground));
+    transform: translateY(101%);
+    transition: transform 0.55s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    transform: translateY(0);
+  }
+}
+
+/* Headline lines sliding up from a mask */
+@keyframes line-up {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+  & > span {
+    display: block;
+    animation: line-up 1.2s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  }
+}
+
+/* Image curtain reveal on scroll */
+.reveal-mask {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.3s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.reveal-mask img {
+  transform: scale(1.18);
+  transition:
+    transform 1.8s cubic-bezier(0.2, 0.7, 0.1, 1),
+    scale 1.2s cubic-bezier(0.2, 0.7, 0.1, 1),
+    filter 0.8s ease;
+}
+.reveal-mask.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+.reveal-mask.is-visible img {
+  transform: none;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@utility animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal-mask,
+  .reveal-mask img {
     opacity: 1;
     transform: none;
+    clip-path: none;
     transition: none;
+  }
+  .animate-marquee,
+  .animate-hero-zoom {
+    animation: none;
   }
 }
