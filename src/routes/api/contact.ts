@@ -29,8 +29,8 @@ export const Route = createFileRoute("/api/contact")({
        const runtime = (request as any).runtime;
        const cfEnv = runtime?.cloudflare?.env;
 
-    const token = cfEnv?.TELEGRAM_BOT_TOKEN;
-    const chatId = cfEnv?.TELEGRAM_CHAT_ID;
+       const token = cfEnv?.TELEGRAM_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+       const chatId = cfEnv?.TELEGRAM_CHAT_ID || process.env.TELEGRAM_CHAT_ID;
 
         if (!token || !chatId) {
           return Response.json(

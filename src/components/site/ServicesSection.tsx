@@ -35,7 +35,12 @@ export function ServicesSection({ showHeading = true }: { showHeading?: boolean 
 
         <div className="grid gap-5 md:grid-cols-12 md:gap-6">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.id} delay={(i % 2) * 140} as="article" className={cn("h-full", SPANS[i])}>
+            <Reveal
+              key={s.id}
+              delay={(i % 2) * 140}
+              as="article"
+              className={cn("h-full", SPANS[i])}
+            >
               <Link
                 to="/contacts"
                 hash="booking"
@@ -43,7 +48,10 @@ export function ServicesSection({ showHeading = true }: { showHeading?: boolean 
                 aria-label={`${s.title} — записаться`}
               >
                 {/* Photo */}
-                <Reveal variant="mask" className="relative aspect-[4/3] overflow-hidden md:aspect-auto md:min-h-[340px] md:flex-1">
+                <Reveal
+                  variant="mask"
+                  className="relative aspect-[4/3] overflow-hidden md:aspect-auto md:min-h-[340px] md:flex-1"
+                >
                   <img
                     src={s.image}
                     alt={s.title}
@@ -72,10 +80,12 @@ export function ServicesSection({ showHeading = true }: { showHeading?: boolean 
                     </span>
                   </div>
 
-                  {/* On pointer devices the description unfolds on hover; always visible on touch */}
+                  {/* Description */}
                   <div className="grid grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-out can-hover:md:grid-rows-[0fr] can-hover:md:group-hover:grid-rows-[1fr] can-hover:md:group-focus-visible:grid-rows-[1fr]">
                     <div className="overflow-hidden">
-                      <p className="max-w-lg pt-4 text-sm leading-[1.8] text-muted-foreground">{s.description}</p>
+                      <p className="max-w-lg pt-4 text-sm leading-[1.8] text-muted-foreground">
+                        {s.description}
+                      </p>
                     </div>
                   </div>
 
