@@ -30,7 +30,11 @@ export const Route = createFileRoute("/api/contact")({
 
         const token = env?.TELEGRAM_BOT_TOKEN;
         const chatId = env?.TELEGRAM_CHAT_ID;
-
+        
+        console.log("TELEGRAM CHECK", {
+        token: Boolean(token),
+        chatId: Boolean(chatId),
+        });
         if (!token || !chatId) {
           return Response.json(
             { error: "Сервер не настроен" },
