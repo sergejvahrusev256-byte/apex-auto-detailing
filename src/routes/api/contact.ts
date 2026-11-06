@@ -1,7 +1,6 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { contactSchema } from "@/lib/contact-schema";
-import * as process from "node:process";
 
 export const Route = createFileRoute("/api/contact")({
   server: {
@@ -27,8 +26,10 @@ export const Route = createFileRoute("/api/contact")({
           );
         }
 
-       const token = process.env.TELEGRAM_BOT_TOKEN;
-       const chatId = process.env.TELEGRAM_CHAT_ID;
+       const cfEnv = (request as any).runtime?.cloudflare?.env;
+
+       const token = cfEnv?.TELEGRAM_BOT_TOKEN;
+       const chatId = cfEnv?.TELEGRAM_CHAT_ID;
         
         console.log("TELEGRAM CHECK", {
         token: Boolean(token),
