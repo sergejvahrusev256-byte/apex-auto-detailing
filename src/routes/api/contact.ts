@@ -28,17 +28,6 @@ export const Route = createFileRoute("/api/contact")({
 
        const runtime = (request as any).runtime;
        const cfEnv = runtime?.cloudflare?.env;
-       const processEnv = (globalThis as any).process?.env;
-
-       console.log("APEX ENV DIAGNOSTIC", {
-       requestRuntime: Boolean(runtime),
-       cloudflareRuntime: Boolean(runtime?.cloudflare),
-       cloudflareEnv: Boolean(cfEnv),
-       tokenInCloudflareEnv: Boolean(cfEnv?.TELEGRAM_BOT_TOKEN),
-       chatIdInCloudflareEnv: Boolean(cfEnv?.TELEGRAM_CHAT_ID),
-       tokenInProcessEnv: Boolean(processEnv?.TELEGRAM_BOT_TOKEN),
-       chatIdInProcessEnv: Boolean(processEnv?.TELEGRAM_CHAT_ID),
-    });
 
     const token = cfEnv?.TELEGRAM_BOT_TOKEN;
     const chatId = cfEnv?.TELEGRAM_CHAT_ID;
