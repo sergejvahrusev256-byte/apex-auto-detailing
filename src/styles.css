@@ -328,8 +328,15 @@
 
 /* Image curtain reveal on scroll */
 .reveal-mask {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 1.3s cubic-bezier(0.7, 0, 0.2, 1);
+  clip-path: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+}
+
+.reveal-mask img {
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 .reveal-mask img {
   transform: scale(1.18);
