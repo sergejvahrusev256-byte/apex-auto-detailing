@@ -12,7 +12,7 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "APEX DETAILING — премиальный детейлинг автомобилей в Москве" },
+      { title: "Ваш автомобиль-Наше исскуство" },
       {
         name: "description",
         content:
@@ -80,7 +80,7 @@ function Index() {
             </Button>
             <Button asChild variant="line" size="xl">
               <Link to="/contacts" hash="booking">
-                Записаться
+                Оставить заявку
               </Link>
             </Button>
           </div>

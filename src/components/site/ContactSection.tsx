@@ -25,28 +25,57 @@ export function ContactSection() {
     if (errors[key]) setErrors((er) => ({ ...er, [key]: undefined }));
   };
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const result = contactSchema.safeParse(values);
-    if (!result.success) {
-      const errs: Errors = {};
-      for (const issue of result.error.issues) {
-        const k = issue.path[0] as keyof Errors;
-        if (!errs[k]) errs[k] = issue.message;
-      }
-      setErrors(errs);
-      return;
+  
+const onSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+
+  const result = contactSchema.safeParse(values);
+
+  if (!result.success) {
+    const errs: Errors = {};
+
+    for (const issue of result.error.issues) {
+      const k = issue.path[0] as keyof Errors;
+      if (!errs[k]) errs[k] = issue.message;
     }
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSent(true);
-      setValues({ name: "", phone: "", message: "" });
-      toast.success("Заявка отправлена", {
-        description: "Менеджер свяжется с вами в течение 15 минут.",
-      });
-    }, 700);
-  };
+
+    setErrors(errs);
+    return;
+  }
+
+  setErrors({});
+  setLoading(true);
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(result.data),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Не удалось отправить заявку");
+    }
+
+    setSent(true);
+    setValues({ name: "", phone: "", message: "" });
+
+    toast.success("Заявка отправлена", {
+      description: "Менеджер свяжется с вами в течение 15 минут.",
+    });
+  } catch (error) {
+    toast.error(
+      error instanceof Error ? error.message : "Ошибка отправки заявки",
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const info = [
     { Icon: Phone, label: "Телефон", value: CONTACTS.phone, href: CONTACTS.phoneHref },
