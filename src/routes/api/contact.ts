@@ -26,12 +26,10 @@ export const Route = createFileRoute("/api/contact")({
           );
         }
 
-        const token = process.env.TELEGRAM_BOT_TOKEN;
-        const chatId = process.env.TELEGRAM_CHAT_ID;
-        console.log("TELEGRAM ENV CHECK:", {
-  token: Boolean(token),
-  chatId: Boolean(chatId),
-        });
+        const env = (globalThis as any).process?.env;
+
+        const token = env?.TELEGRAM_BOT_TOKEN;
+        const chatId = env?.TELEGRAM_CHAT_ID;
 
         if (!token || !chatId) {
           return Response.json(
