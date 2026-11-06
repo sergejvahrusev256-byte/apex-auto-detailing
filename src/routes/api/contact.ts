@@ -1,6 +1,7 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { contactSchema } from "@/lib/contact-schema";
+import * as process from "node:process";
 
 export const Route = createFileRoute("/api/contact")({
   server: {
@@ -26,10 +27,8 @@ export const Route = createFileRoute("/api/contact")({
           );
         }
 
-        const env = (globalThis as any).process?.env;
-
-        const token = env?.TELEGRAM_BOT_TOKEN;
-        const chatId = env?.TELEGRAM_CHAT_ID;
+       const token = process.env.TELEGRAM_BOT_TOKEN;
+       const chatId = process.env.TELEGRAM_CHAT_ID;
         
         console.log("TELEGRAM CHECK", {
         token: Boolean(token),
